@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-zinc-950: #09090b;
+  --color-purple-400: #c084fc;
+  --color-purple-500: #a855f7;
+  --color-purple-900: #581c87;
+
+  /* Neon Glow */
+  --drop-shadow-neon: 0 0 10px rgba(168, 85, 247, 0.6);
+  --drop-shadow-neon-strong: 0 0 20px rgba(168, 85, 247, 0.8);
+}
+
+@layer base {
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .system-border {
+    border: 1px solid rgba(168, 85, 247, 0.5);
+    background: rgba(9, 9, 11, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+  }
+}
