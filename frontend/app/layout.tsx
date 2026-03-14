@@ -23,8 +23,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="dark">
+      className="dark"
+      suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`
         ${firaCode.className}
         bg-zinc-950

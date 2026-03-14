@@ -1,124 +1,97 @@
 "use client";
 
 import SystemCard from "@/components/ui/SystemCard";
+import BioOverview from "@/components/home/BioOverview";
+import GithubIntel from "@/components/home/GithubIntel";
+import ActiveDeployments from "@/components/home/ActiveDeployments";
+import ResourceMonitor from "@/components/home/ResourceMonitor";
 
-export default function Home() {
+export default function Page() {
   return (
-    <div className="animate-in fade-in zoom-in-95 duration-300 max-w-5xl mx-auto space-y-8 pb-12">
-      <header className="border-b border-purple-500/30 pb-4 mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-purple-300 tracking-widest uppercase mb-2 drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]">
+    <div className="animate-in fade-in zoom-in-95 duration-500 max-w-7xl mx-auto space-y-10 pb-12 px-4">
+      {/* HEADER SECTION */}
+      <header className="space-y-2">
+        <h2 className="text-3xl md:text-4xl font-bold text-purple-300 tracking-[0.2em] uppercase drop-shadow-[0_0_10px_rgba(168,85,247,0.4)]">
           Command Center
         </h2>
-        <p className="text-zinc-400 text-sm uppercase tracking-wider">
-          {"// Welcome back, Operator. All core systems are operational."}
-        </p>
+        <div className="flex items-center gap-3 border-t border-zinc-800 pt-3">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <p className="text-zinc-500 text-[11px] font-mono uppercase tracking-widest">
+            {"// DECP KERNEL V2.4 INITIALIZED — ALL SUBSYSTEMS OPERATIONAL"}
+          </p>
+        </div>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <SystemCard title="IDENTITY_VERIFIED">
-          <div className="p-5 bg-zinc-950 flex flex-col gap-4 h-full min-h-64">
-            <div className="flex items-center gap-4 border-b border-purple-500/20 pb-4">
-              <div className="w-16 h-16 bg-purple-900/40 border border-purple-500 flex items-center justify-center text-2xl font-bold text-purple-300 shadow-[0_0_10px_rgba(168,85,247,0.4)] shrink-0">
-                PD
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-purple-200 uppercase tracking-widest">
-                  Prathmesh Desai
-                </h3>
-                <p className="text-xs text-purple-400 uppercase tracking-widest mt-1">
-                  Full Stack + AI Systems Eng.
-                </p>
-              </div>
-            </div>
-            <div className="text-sm text-zinc-300 leading-relaxed space-y-3 flex-1">
-              <p>
-                &gt; B.Tech Computer Science (2023-2027) at SRM Institute of
-                Science and Technology.
-              </p>
-              <p>
-                &gt; Architecting scalable web systems, fine-tuning machine
-                learning models, and building open-source developer tooling.
-              </p>
-            </div>
-            <div className="mt-auto pt-4 border-t border-purple-500/20">
-              <div className="text-xs text-purple-500 font-bold mb-2 uppercase tracking-widest">
-                Core_Stack
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "Next.js",
-                  "Python/FastAPI",
-                  "Machine Learning",
-                  "Docker",
-                  "AWS",
-                ].map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2 py-1 bg-purple-900/20 border border-purple-500/40 text-xs text-purple-300 uppercase tracking-wider">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </SystemCard>
-
-        <SystemCard title="ACTIVE_DEPLOYMENTS">
-          <div className="p-4 bg-zinc-950 flex flex-col gap-3 h-full min-h-64">
-            <DeploymentRow
-              name="IntelliDoc-Query"
-              status="ONLINE"
-              type="AI/RAG System"
-            />
-            <DeploymentRow
-              name="ExpressKit Framework"
-              status="ONLINE"
-              type="NPM Package"
-            />
-            <DeploymentRow
-              name="AQI-Prediction-Engine"
-              status="TRAINING"
-              type="ML Model"
-            />
-            <DeploymentRow
-              name="Milan '25/'26 Core"
-              status="DEPLOYED"
-              type="Event Infrastructure"
-            />
-          </div>
-        </SystemCard>
-      </div>
-    </div>
-  );
-}
-
-function DeploymentRow({
-  name,
-  status,
-  type,
-}: {
-  name: string;
-  status: string;
-  type: string;
-}) {
-  const isOnline = status === "ONLINE" || status === "DEPLOYED";
-  return (
-    <div className="flex items-center justify-between p-3 border border-purple-500/20 bg-purple-900/10 hover:bg-purple-900/30 transition-colors cursor-default">
-      <div>
-        <div className="text-purple-200 text-sm font-bold uppercase tracking-widest">
-          {name}
+      {/* SECTION 1: CORE BIOMETRICS */}
+      <section className="space-y-6">
+        <div className="flex items-center gap-2 text-purple-400/80">
+          <span className="text-xs">✦</span>
+          <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase">
+            Core_Biometrics
+          </h3>
         </div>
-        <div className="text-zinc-500 text-xs uppercase mt-1">{type}</div>
-      </div>
-      <div className="flex items-center gap-2">
-        <span
-          className="text-xs tracking-widest font-bold"
-          style={{ color: isOnline ? "#4ade80" : "#eab308" }}>
-          [{status}]
-        </span>
-        <span
-          className={`w-2 h-2 rounded-full ${isOnline ? "bg-green-500 shadow-[0_0_5px_#22c55e]" : "bg-yellow-500 shadow-[0_0_5px_#eab308]"}`}></span>
-      </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
+          <div className="lg:col-span-4">
+            <SystemCard title="NODE: BIOGRAPHIC_DATA">
+              <div className="p-1 bg-zinc-950/50 backdrop-blur-sm">
+                <BioOverview />
+              </div>
+            </SystemCard>
+          </div>
+
+          <div className="lg:col-span-2">
+            <SystemCard title="NODE: TELEMETRY">
+              <div className="p-4 bg-zinc-950/50 h-full">
+                <ResourceMonitor />
+              </div>
+            </SystemCard>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 2: SYSTEM INTELLIGENCE - Refined Bento Layout */}
+      <section className="space-y-6">
+        <div className="flex items-center gap-2 text-purple-400/80">
+          <span className="text-xs">{"</>"}</span>
+          <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase">
+            System_Intelligence
+          </h3>
+        </div>
+
+        {/* Using a 6-column grid to allow a 4:2 ratio */}
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
+          {/* GITHUB INTEL - Wide Block (4/6) */}
+          <div className="lg:col-span-4 group transition-transform duration-300 flex flex-col">
+            <SystemCard title="NODE: GITHUB_INTEL">
+              <div className="p-4 lg:p-6 bg-zinc-950/40 min-h-[400px] h-full group-hover:bg-purple-900/5 transition-colors">
+                <GithubIntel />
+              </div>
+            </SystemCard>
+          </div>
+
+          {/* ACTIVE DEPLOYMENTS - Slimmer Side Block (2/6) */}
+          <div className="lg:col-span-2 group flex flex-col">
+            <SystemCard title="NODE: ACTIVE_UPLINKS">
+              <div className="p-4 lg:p-5 bg-zinc-950/40 h-full flex flex-col overflow-hidden group-hover:bg-purple-900/5 transition-colors">
+                <ActiveDeployments />
+              </div>
+            </SystemCard>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="pt-12 flex justify-between items-center text-[9px] text-zinc-700 font-mono uppercase tracking-[0.4em] border-t border-zinc-900">
+        <div className="flex gap-6">
+          <span>UID: PRATHMESH_DESAI</span>
+          <span>LOC: SRM_UNIVERSITY</span>
+        </div>
+        <span>SYS. INTEGRITY: 100%</span>
+      </footer>
     </div>
   );
 }

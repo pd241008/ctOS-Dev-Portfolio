@@ -3,7 +3,31 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import SystemCard from "../ui/SystemCard";
-import { executeCommand } from "../../lib/terminalCommands";
+import { executeCommand, INITIAL_BOOT_SEQUENCE } from "../../lib/terminalCommands";
+
+let hasAnimatedBoot = false;
+
+function TypewriterLine({ text, speed = 15, onComplete }: { text: string; speed?: number; onComplete?: () => void }) {
+  const [displayed, setDisplayed] = useState("");
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+    let charIndex = 0;
+
+    intervalId = setInterval(() => {
+      setDisplayed(text.slice(0, charIndex + 1));
+      charIndex++;
+      if (charIndex >= text.length) {
+        clearInterval(intervalId);
+        onComplete?.();
+      }
+    }, speed);
+
+    return () => clearInterval(intervalId);
+  }, [text, speed, onComplete]);
+
+  return <span>{displayed}</span>;
+}
 
 interface FloatingTerminalProps {
   switchToGui: () => void;
@@ -24,9 +48,15 @@ export default function FloatingTerminal({
   const router = useRouter();
   const currentPath = usePathname();
 
+  // Track if this is the first time booting up the terminal in the session
+  const [isInitialBoot, setIsInitialBoot] = useState(
+    !hasAnimatedBoot && history.length === INITIAL_BOOT_SEQUENCE.length
+  );
+  const [completedLines, setCompletedLines] = useState(isInitialBoot ? 0 : history.length);
+
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [history]);
+  }, [history, completedLines]);
 
   const handleCommand = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,22 +91,46 @@ export default function FloatingTerminal({
       onClose={switchToGui}>
       <div className="h-112 max-h-[80vh] bg-zinc-950/95 backdrop-blur-md p-4 flex flex-col font-mono text-sm border-t border-purple-500/50">
         <div className="flex-1 overflow-y-auto space-y-1 mb-4 scrollbar-thin scrollbar-thumb-purple-500 pr-2">
-          {history.map((line, i) => (
-            <div
-              key={i}
-              className={
-                line.startsWith("root@")
-                  ? "text-purple-300 font-semibold mt-2"
-                  : "text-purple-400 opacity-90"
-              }>
-              {line}
-            </div>
-          ))}
+          {history.map((line, i) => {
+            const isAnimated = isInitialBoot && i < INITIAL_BOOT_SEQUENCE.length;
+            
+            // If we're animating and haven't reached this line yet, don't show it
+            if (isAnimated && i > completedLines) return null;
+
+            return (
+              <div
+                key={i}
+                className={
+                  line.startsWith("root@")
+                    ? "text-purple-300 font-semibold mt-2"
+                    : "text-purple-400 opacity-90"
+                }>
+                {isAnimated && i === completedLines ? (
+                  <TypewriterLine
+                    text={line}
+                    onComplete={() => {
+                      const nextLine = completedLines + 1;
+                      setCompletedLines(nextLine);
+                      if (nextLine >= INITIAL_BOOT_SEQUENCE.length) {
+                        setIsInitialBoot(false);
+                        hasAnimatedBoot = true;
+                      }
+                    }}
+                  />
+                ) : (
+                  line
+                )}
+              </div>
+            );
+          })}
           <div ref={endRef} />
         </div>
-        <form
-          onSubmit={handleCommand}
-          className="flex items-center gap-2 pt-2 border-t border-purple-500/30">
+        
+        {/* Only show prompt if NOT currently booting */}
+        {completedLines >= INITIAL_BOOT_SEQUENCE.length && (
+          <form
+            onSubmit={handleCommand}
+            className="flex items-center gap-2 pt-2 border-t border-purple-500/30 animate-in fade-in duration-500">
           <span className="text-purple-500 font-bold whitespace-nowrap">
             root@ctos:~$
           </span>
@@ -107,9 +161,11 @@ export default function FloatingTerminal({
               autoFocus
               spellCheck={false}
               autoComplete="off"
+              suppressHydrationWarning
             />
           </div>
         </form>
+        )}
       </div>
     </SystemCard>
   );

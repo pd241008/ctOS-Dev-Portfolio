@@ -1,0 +1,61 @@
+export default function BioOverview() {
+  return (
+    <div className="p-5 bg-zinc-950 flex flex-col gap-4 font-mono min-h-20rem">
+      <div className="flex items-center gap-4 border-b border-purple-500/20 pb-4">
+        <div className="w-16 h-16 bg-purple-900/40 border border-purple-500 flex items-center justify-center text-2xl font-bold text-purple-300">
+          PD
+        </div>
+
+        <div>
+          <h3 className="text-xl font-bold text-purple-200 uppercase tracking-widest">
+            Prathmesh Desai
+          </h3>
+
+          <p className="text-xs text-purple-400 uppercase tracking-widest mt-1">
+            Backend-Focused Full Stack Developer
+          </p>
+        </div>
+      </div>
+
+      <div className="text-sm text-zinc-300 leading-relaxed space-y-3">
+        <p>&gt; B.Tech Computer Science (2023-2027) — SRM University</p>
+
+        <p>
+          &gt; Technical Lead — Milan &apos;25 / &apos;26. Architecting
+          ticketing & platform infrastructure scaling to 4K+ users.
+        </p>
+
+        <p>
+          &gt; Specializing in backend architecture, distributed systems,
+          developer tooling, and AI-powered applications.
+        </p>
+      </div>
+
+      <div className="mt-auto pt-4 border-t border-purple-500/20">
+        <div className="text-xs text-purple-500 font-bold mb-2 uppercase tracking-widest">
+          SYS_CORE_STACK
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {[
+            "Next.js",
+            "Node.js",
+            "Express",
+            "FastAPI",
+            "TypeScript",
+            "Python",
+            "PostgreSQL",
+            "MongoDB",
+            "AWS EC2",
+          ].map((tech) => (
+            <span
+              key={tech}
+              className="px-2 py-1 bg-purple-900/20 border border-purple-500/40 text-[10px] text-purple-300 uppercase">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

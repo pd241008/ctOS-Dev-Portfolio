@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import FloatingTerminal from "../../ui/FloatingTerminal";
 
 interface DashboardProps {
@@ -93,37 +94,54 @@ export default function ToggleDashboard({
       {/* MAIN CONTENT AREA */}
       <main className="flex-1 h-full relative overflow-hidden">
         {/* NEXT.JS PAGE CONTENT (100% Visible, no blur, no opacity drop!) */}
-        <div
-          className={`h-full overflow-y-auto p-6 md:p-12 transition-all duration-300 ${isTerminal ? "pointer-events-none" : "pointer-events-auto"}`}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98, filter: "blur(4px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="h-full overflow-y-auto p-6 md:p-12 transition-all duration-300 pointer-events-auto">
           {children}
-        </div>
+        </motion.div>
 
         {/* TERMINAL OVERLAY - Removed background dark tint, made click-through */}
-        {isTerminal && !isTerminalMinimized && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-            {/* The terminal window itself is clickable and casts a glow */}
-            <div className="w-full max-w-3xl pointer-events-auto drop-shadow-[0_0_40px_rgba(0,0,0,0.8)] animate-in fade-in zoom-in-95 duration-200">
-              <FloatingTerminal
-                switchToGui={() => setViewMode("gui")}
-                onMinimize={() => setIsTerminalMinimized(true)}
-                history={terminalHistory}
-                setHistory={setTerminalHistory}
-              />
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {isTerminal && !isTerminalMinimized && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.85, y: 20, rotateX: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 10, rotateX: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="absolute inset-0 z-50 flex items-center justify-center p-4 pointer-events-none perspective-[1000px]">
+              {/* The terminal window itself is clickable and casts a glow */}
+              <div className="w-full max-w-3xl pointer-events-auto drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+                <FloatingTerminal
+                  switchToGui={() => setViewMode("gui")}
+                  onMinimize={() => setIsTerminalMinimized(true)}
+                  history={terminalHistory}
+                  setHistory={setTerminalHistory}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* RESTORE CLI BUTTON */}
-        {isTerminal && isTerminalMinimized && (
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-40 animate-in slide-in-from-bottom-4 duration-300">
-            <button
-              onClick={() => setIsTerminalMinimized(false)}
-              className="px-6 py-3 bg-zinc-950 border-2 border-purple-500 rounded-sm text-purple-300 font-bold tracking-widest hover:bg-purple-900/40 transition-all flex items-center gap-3 shadow-[0_0_20px_rgba(168,85,247,0.4)] cursor-pointer">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]" />
-              RESTORE_CLI
-            </button>
-          </div>
-        )}
+        <AnimatePresence>
+          {isTerminal && isTerminalMinimized && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 40 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="absolute bottom-10 left-1/2 -translate-x-1/2 z-40">
+              <button
+                onClick={() => setIsTerminalMinimized(false)}
+                className="px-6 py-3 bg-zinc-950 border-2 border-purple-500 rounded-sm text-purple-300 font-bold tracking-widest hover:bg-purple-900/40 transition-all flex items-center gap-3 shadow-[0_0_20px_rgba(168,85,247,0.4)] cursor-pointer">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]" />
+                RESTORE_CLI
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );

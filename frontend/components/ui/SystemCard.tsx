@@ -30,9 +30,11 @@ export default function SystemCard({
           {/* Window Controls - NOW INTERACTIVE */}
           <div className="flex gap-2">
             <button
+              suppressHydrationWarning
               onClick={onClose}
               className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_5px_rgba(239,68,68,0.6)] hover:opacity-70 cursor-pointer"></button>
             <button
+              suppressHydrationWarning
               onClick={onMinimize}
               className="w-3 h-3 rounded-full bg-yellow-500 shadow-[0_0_5px_rgba(234,179,8,0.6)] hover:opacity-70 cursor-pointer"></button>
             <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.6)]"></div>
