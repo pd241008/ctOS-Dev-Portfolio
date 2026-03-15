@@ -47,7 +47,7 @@ export const commandRegistry: Record<string, CommandHandler> = {
     "  help           — display this help message",
     "  clear          — clear terminal output",
     "  gui            — mount GUI visual interface",
-    "  cd [dir]       — change directory (e.g., 'cd archives')",
+    "  cd [dir]       — change directory (e.g., 'cd archive')",
     "  pwd            — print working directory",
     "  ls             — list directory contents",
     "  cat [file]     — view file contents",
@@ -131,9 +131,9 @@ export const commandRegistry: Record<string, CommandHandler> = {
       overview: ["home"],
       "~": ["home"],
       "/": [],
-      archives: ["archives"],
-      archive: ["archives"],
-      "/archive": ["archives"],
+      archives: ["archive"],
+      archive: ["archive"],
+      "/archive": ["archive"],
       sandbox: ["sandbox"],
       "/sandbox": ["sandbox"],
       uplink: ["uplink"],
@@ -213,7 +213,7 @@ export const commandRegistry: Record<string, CommandHandler> = {
 
   // ── projects ─────────────────────────────────────────────────
   projects: (_args, ctx) => {
-    const archiveDir = filesystem.children.archives;
+    const archiveDir = filesystem.children.archive;
     if (!archiveDir || archiveDir.type !== "dir") {
       return [...ctx.history, "Error: archive directory not found"];
     }
@@ -230,7 +230,7 @@ export const commandRegistry: Record<string, CommandHandler> = {
       "",
       ...projects,
       "",
-      "  Use 'cd archives' then 'cat <name>.txt' to view details.",
+      "  Use 'cd archive' then 'cat <name>.txt' to view details.",
       "",
     ];
   },

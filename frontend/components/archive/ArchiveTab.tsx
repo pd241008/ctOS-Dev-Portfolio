@@ -102,7 +102,7 @@ export default function ArchiveTab() {
           <span className="group-hover:-translate-x-1 transition-transform">
             ⋘
           </span>{" "}
-          [ BACK_TO_ARCHIVES ]
+          [ BACK_TO_ARCHIVE ]
         </button>
 
         <SystemCard
