@@ -127,7 +127,6 @@ The system supports a growing list of operational commands:
 | `cd`       | `cd [dir]`         | Navigates the virtual filesystem.                        |
 | `cat`      | `cat [file.txt]`   | Reads project files and documentation.                   |
 | `clear`    | `clear`            | Flushes the terminal buffer.                             |
-| `dedsec`   | `dedsec`           | **[RESTRICTED]** Triggers the system-wide visual breach. |
 
 ---
 
