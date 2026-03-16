@@ -22,18 +22,48 @@ export interface Challenge {
 export const INITIAL_FILES: Record<string, SandboxFile> = {
   'README.md': {
     locked: false,
-    content: `# ExpressKit Sandbox
-The project is currently uninitialized.
+    content: `# ExpressKit Sandbox // OPERATIONAL_MANUAL
 
-To begin:
+Welcome to the ExpressKit Integrated Runtime. This environment simulates a production-grade backend deployment.
+
+## 🛠️ HELP_MENU // AVAILABLE_OPERATIONS
+
+╔══════════════════════════════════════════════╗
+║            AVAILABLE COMMANDS                ║
+╚══════════════════════════════════════════════╝
+
+  help           — display this help message
+  clear          — clear terminal output
+  ls             — list directory contents
+  cat [file]     — view file contents
+  npx @pd241008/expresskit init 
+                 — initialize production boilerplate
+
+---
+
+### [ GETTING_STARTED ]
 1. Open the **Integrated Terminal** below.
 2. Run: \`npx @pd241008/expresskit init\`
-3. Follow the setup prompts to generate the project structure.`,
+3. This will mount the full production node and enable active health monitoring.`,
   }
 };
 
 // ─── Production Template (From CLI Init) ────────────────────────
 export const PRODUCTION_TEMPLATE: Record<string, SandboxFile> = {
+  'README.md': {
+    locked: false,
+    content: `# ExpressKit Production Node // ACTIVE
+The production node has been initialized. All internal systems are linked to the dashboard telemetry.
+
+## 📡 PROJECT_HEALTH_MONITORING
+Available Health Endpoints:
+- \`GET /\`               -> Base Connectivity
+- \`GET /health\`        -> Logic Layer Check
+- \`GET /system/status\` -> Environment Telemetry
+
+Use the **Simulation Dashboard** to send requests to these endpoints.`,
+  },
+
   'src/server.ts': {
     locked: true,
     content: `import app from './app';
@@ -90,6 +120,11 @@ export default app;`,
 const routes = [
   {
     method: 'GET',
+    path: '/',
+    handler: healthController.root
+  },
+  {
+    method: 'GET',
     path: '/health',
     handler: healthController.check
   },
@@ -108,6 +143,14 @@ export default routes;`,
     content: `import { healthService } from '../services/health_service';
 
 export const healthController = {
+  root: (req, res) => {
+    res.json({ 
+      node: 'ExpressKit-Production',
+      status: 'OPERATIONAL',
+      message: 'Uplink established through ctOS interface'
+    });
+  },
+
   check: (req, res) => {
     const isHealthy = healthService.getHealthStatus();
     res.json({ status: isHealthy ? 'UP' : 'DOWN', timestamp: new Date() });
@@ -273,6 +316,7 @@ export function getBootLogs(files: Record<string, SandboxFile>): string[] {
 
   logs.push('[ctOS SANDBOX] Bridge: Connected to internal systems');
   logs.push('[ctOS SANDBOX] Routes registered:');
+  logs.push('  ├─ GET /');
   logs.push('  ├─ GET /health');
   logs.push('  ├─ GET /system/status');
   logs.push('[ctOS SANDBOX] Server ready on port 3000');

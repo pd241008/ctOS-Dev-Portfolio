@@ -14,34 +14,13 @@ import {
   executeRequest,
   getBootLogs,
 } from "@/lib/sandbox";
+import { getProjects, type Project } from "@/lib/projects";
+import ProjectLinkController from "@/components/ui/ProjectLinkController";
 
 // ─── Drafts Data ────────────────────────────────────────────────
-const DRAFTS = [
-  {
-    id: "ai-mesh",
-    title: "AI_MESH_NET",
-    status: "DRAFT",
-    desc: "Autonomous microservice orchestration using LLM routing.",
-  },
-  {
-    id: "omega",
-    title: "PROJECT_OMEGA",
-    status: "CONCEPT",
-    desc: "Highly available, fault-tolerant distributed system for micro-transactions.",
-  },
-  {
-    id: "quantum-auth",
-    title: "Q_AUTH_ZERO",
-    status: "CONCEPT",
-    desc: "Post-quantum cryptographic middleware for ExpressKit.",
-  },
-  {
-    id: "edge-sync",
-    title: "EDGE_SYNC_V2",
-    status: "DRAFT",
-    desc: "Real-time state synchronization for globally distributed backends.",
-  },
-];
+// Drafts are now fetched from the central projects library
+const { minor: ALL_MINOR } = getProjects(true);
+const DRAFTS = ALL_MINOR.filter(p => p.isDraft);
 
 export default function SandboxPage() {
   const [viewMode, setViewMode] = useState<"overview" | "ide">("overview");
@@ -59,6 +38,7 @@ export default function SandboxPage() {
     "terminal" | "console"
   >("terminal");
   const [isInitialized, setIsInitialized] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const updateFile = (name: string, content: string) => {
     setFiles((prev) => ({ ...prev, [name]: { ...prev[name], content } }));
@@ -73,7 +53,7 @@ export default function SandboxPage() {
     }
     setFiles(template);
     setIsInitialized(true);
-    setActiveFile("src/routes/health/route.ts");
+    setActiveFile("README.md");
     setActiveBottomTab("console");
     setViewMode("ide"); // Auto-expand on init
   };
@@ -156,7 +136,72 @@ export default function SandboxPage() {
         </div>
       </header>
 
-      {viewMode === "overview" ? (
+      {selectedProject ? (
+        <div className="animate-in slide-in-from-right-8 fade-in duration-500 max-w-7xl mx-auto space-y-8">
+          <button
+            onClick={() => setSelectedProject(null)}
+            className="group flex items-center gap-3 text-purple-500 hover:text-purple-300 transition-all font-black uppercase text-[10px] tracking-[0.3em] cursor-pointer">
+            <span className="group-hover:-translate-x-1 transition-transform">
+              ⋘
+            </span>{" "}
+            [ BACK_TO_LAB_OVERVIEW ]
+          </button>
+
+          <SystemCard
+            title={`NODE_DEEP_SCAN // ${selectedProject.id.toUpperCase()}`}>
+            <div className="p-8 bg-zinc-950 flex flex-col md:flex-row gap-12 min-h-[50vh]">
+              <div className="flex-1 space-y-8">
+                <div>
+                  <h1 className="text-4xl font-black text-white tracking-[0.2em] uppercase mb-2 drop-shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                    {selectedProject.title}
+                  </h1>
+                  <p className="text-purple-500 font-bold uppercase tracking-[0.3em] text-[11px] mt-4">
+                    SYSTEM_TYPE: {selectedProject.type || "Experimental_Module"}
+                  </p>
+                </div>
+
+                <div className="p-6 bg-purple-900/5 border-l-4 border-purple-500 relative group overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                  <p className="text-zinc-300 leading-relaxed font-mono text-[14px]">
+                    {selectedProject.desc}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {selectedProject.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-zinc-900 border border-zinc-700 text-[10px] text-zinc-400 font-black uppercase tracking-widest">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="md:w-64 space-y-4 shrink-0">
+                <div className="bg-zinc-900/50 p-4 border border-zinc-800">
+                  <ProjectLinkController 
+                    githubUrl={selectedProject.githubUrl}
+                    liveUrl={selectedProject.liveUrl}
+                    docUrl={selectedProject.docUrl}
+                  />
+                </div>
+                <div className="bg-zinc-900/30 p-4 border border-zinc-800">
+                  <div className="text-[10px] text-zinc-600 font-black uppercase tracking-widest mb-2">
+                    Build_Status
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                    <span className="text-[11px] text-amber-400 font-bold uppercase">
+                      IN_DEVELOPMENT
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SystemCard>
+        </div>
+      ) : viewMode === "overview" ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in slide-in-from-bottom-5 duration-700">
           {/* Block 1: Overview */}
           <div className="relative group">
@@ -241,28 +286,41 @@ export default function SandboxPage() {
           </div>
 
           {/* Drafts Section */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-8">
             <h4 className="text-[10px] text-zinc-600 font-black uppercase tracking-[0.4em] flex items-center gap-4">
-              <span className="w-12 h-[1px bg-zinc-800" />{" "}
+              <span className="w-12 h-[1px] bg-zinc-800" />{" "}
               INNOVATION_DRAFTS_REPOSITORY{" "}
-              <span className="flex-1 h-1px bg-zinc-800" />
+              <span className="flex-1 h-[1px] bg-zinc-800" />
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {DRAFTS.map((draft) => (
                 <div
                   key={draft.id}
-                  className="bg-zinc-900/30 border border-zinc-800 p-6 hover:border-purple-500/30 transition-all group cursor-not-allowed">
+                  onClick={() => setSelectedProject(draft)}
+                  className="p-6 bg-zinc-950/80 border border-zinc-800 hover:border-purple-500 hover:bg-purple-900/20 transition-all cursor-pointer rounded-sm flex flex-col min-h-60 group">
                   <div className="flex justify-between items-start mb-4">
-                    <span className="text-xs font-black text-white tracking-widest">
-                      {draft.title}
+                    <span className="text-amber-500 text-2xl group-hover:scale-110 transition-transform">
+                      📁
                     </span>
-                    <span className="text-[9px] px-2 py-0.5 bg-zinc-800 text-zinc-500 font-bold uppercase">
-                      {draft.status}
+                    <span className="text-purple-500 text-[10px] font-black tracking-[0.2em]">
+                      [ DEEP_SCAN ]
                     </span>
                   </div>
-                  <p className="text-[11px] text-zinc-500 font-medium leading-relaxed">
+                  <h4 className="text-white font-black uppercase tracking-widest text-sm mb-3 group-hover:text-purple-300 transition-colors">
+                    {draft.title}
+                  </h4>
+                  <p className="text-[11px] text-zinc-500 line-clamp-3 mb-6 flex-1 font-medium leading-relaxed">
                     {draft.desc}
                   </p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {draft.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[9px] text-purple-400 bg-purple-900/30 px-2 py-0.5 rounded-sm uppercase font-black tracking-tighter">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -318,7 +376,7 @@ export default function SandboxPage() {
                 />
 
                 <div className="flex-1 flex flex-col overflow-hidden">
-                  <div className="flex-1 overflow-hidden bg-black/40">
+                  <div className="flex-1 flex overflow-hidden bg-black/40">
                     <CodeEditor
                       code={files[activeFile]?.content || ""}
                       locked={files[activeFile]?.locked || false}

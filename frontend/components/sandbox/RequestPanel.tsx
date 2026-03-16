@@ -14,7 +14,7 @@ export default function RequestPanel({
   lastResponse,
 }: RequestPanelProps) {
   const [method, setMethod] = useState("GET");
-  const [path, setPath] = useState("/hello");
+  const [path, setPath] = useState("/health");
   const [body, setBody] = useState('{ "data": "test" }');
 
   const handleSend = () => {

@@ -75,6 +75,12 @@ export default function UplinkPage() {
       href: "https://linkedin.com/in/pd241008",
       icon: "🌐",
     },
+    {
+      label: "RESUME_UPLINK",
+      val: "Prathmesh_Desai_Resume.pdf",
+      href: "/Prathmesh_Desai_Resume.pdf",
+      icon: "📄",
+    },
   ];
 
   return (

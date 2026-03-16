@@ -3,92 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import SystemCard from "../ui/SystemCard";
+import ProjectLinkController from "../ui/ProjectLinkController";
 
-interface Project {
-  id: string;
-  title: string;
-  type?: string;
-  description?: string;
-  desc?: string;
-  tags: string[];
-  status?: string;
-  githubUrl?: string;
-  liveUrl?: string;
-}
+import { getProjects, type Project } from "@/lib/projects";
 
-const MAJOR_PROJECTS: Project[] = [
-  {
-    id: "expresskit",
-    title: "ExpressKit CLI",
-    type: "Developer Tooling",
-    description:
-      "Convention-driven backend scaffolding tool engineered to standardize Express.js microservice architecture. Reduces initialization time from hours to seconds via dynamic route discovery.",
-    tags: ["Node.js", "Express", "TypeScript", "CLI"],
-    status: "LIVE_ON_NPM",
-    githubUrl: "https://github.com/pd241008/ExpressKit",
-    liveUrl: "https://www.npmjs.com/package/@pd241008/expresskit",
-  },
-  {
-    id: "intellidoc",
-    title: "IntelliDoc Query Engine",
-    type: "AI & Search",
-    description:
-      "Full-stack document processing system. Utilizes Retrieval-Augmented Generation (RAG) to allow users to extract deep insights and query complex documents instantly.",
-    tags: ["LLMs", "Vector DB", "FastAPI", "Next.js"],
-    status: "BUILDING",
-    githubUrl: "https://github.com/pd241008/IntelliDoc-Query",
-    liveUrl: "#",
-  },
-  {
-    id: "milan",
-    title: "Milan Core Platform",
-    type: "Event Infrastructure",
-    description:
-      "High-concurrency ticketing infrastructure architected for SRM University. Features dual-authentication flows, automated rate limiting, and AWS-backed deployment handling 4K+ active users.",
-    tags: ["Next.js", "Node.js", "AWS", "MongoDB"],
-    status: "STABLE_DEPLOYMENT",
-    githubUrl: "#",
-    liveUrl: "#",
-  },
-];
+const { major: MAJOR_PROJECTS, minor: MINOR_PROJECTS } = getProjects(false);
 
-const MINOR_PROJECTS: Project[] = [
-  {
-    id: "aqi",
-    title: "AQI Prediction Engine",
-    desc: "Python and Next.js integration forecasting localized pollution levels. Currently optimizing accurate algorithmic forecasting.",
-    tags: ["ML", "Python", "Next.js"],
-    githubUrl: "https://github.com/pd241008/AQI-Preditcion-Model",
-  },
-  {
-    id: "neuro",
-    title: "NeuroTrack",
-    desc: "Mental wellness dashboard using Next.js and Tailwind CSS with AI backend using FastAPI and LangChain for RAG pipeline support.",
-    tags: ["FastAPI", "AI", "React"],
-    githubUrl: "https://github.com/pd241008/NeuroTrack",
-  },
-  {
-    id: "ai-tictactoe",
-    title: "AI-TicTacToe",
-    desc: "A Tic-Tac-Toe game powered by AI, built with Next.js using a minimax algorithm for optimal moves.",
-    tags: ["TS", "Minimax", "Next.js"],
-    githubUrl: "https://github.com/pd241008/AI-TicTacToe",
-  },
-  {
-    id: "roadmap",
-    title: "RoadMap Generator",
-    desc: "AI-based roadmap generator built with TypeScript that dynamically creates curated learning paths.",
-    tags: ["AI", "TypeScript", "Next.js"],
-    githubUrl: "https://github.com/pd241008/RoadMap-Genrator",
-  },
-  {
-    id: "color",
-    title: "Color Palette Generator",
-    desc: "A responsive Next.js and Tailwind CSS web application that generates beautiful, cohesive color palettes instantly.",
-    tags: ["Next.js", "Tailwind", "Design"],
-    githubUrl: "https://github.com/pd241008/Color-Palate-Generator",
-  },
-];
 
 export default function ArchiveTab() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -136,40 +56,26 @@ export default function ArchiveTab() {
               </div>
             </div>
 
-            <div className="md:w-64 space-y-4 shrink-0">
-              <div className="bg-zinc-900/50 p-4 border border-zinc-800 space-y-4">
-                <div className="text-[10px] text-zinc-600 font-black uppercase tracking-widest border-b border-zinc-800 pb-2">
-                  Deployment_Links
+              <div className="md:w-64 space-y-4 shrink-0">
+                <div className="bg-zinc-900/50 p-4 border border-zinc-800">
+                  <ProjectLinkController 
+                    githubUrl={selectedProject.githubUrl}
+                    liveUrl={selectedProject.liveUrl}
+                    docUrl={selectedProject.docUrl}
+                  />
                 </div>
-                <a
-                  href={selectedProject.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block w-full text-center py-2 bg-purple-600 hover:bg-purple-500 text-white font-black uppercase text-[10px] tracking-widest transition-all shadow-[0_4px_0_0_rgba(126,34,206,1)] active:shadow-none active:translate-y-1">
-                  Initialize Repo
-                </a>
-                {selectedProject.liveUrl && (
-                  <a
-                    href={selectedProject.liveUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block w-full text-center py-2 border border-purple-500 text-purple-400 hover:bg-purple-900/20 font-black uppercase text-[10px] tracking-widest transition-all">
-                    Live Interface
-                  </a>
-                )}
-              </div>
-              <div className="bg-zinc-900/30 p-4 border border-zinc-800">
-                <div className="text-[10px] text-zinc-600 font-black uppercase tracking-widest mb-2">
-                  Build_Status
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-[11px] text-green-400 font-bold uppercase">
-                    {selectedProject.status || "STABLE"}
-                  </span>
+                <div className="bg-zinc-900/30 p-4 border border-zinc-800">
+                  <div className="text-[10px] text-zinc-600 font-black uppercase tracking-widest mb-2">
+                    Build_Status
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-[11px] text-green-400 font-bold uppercase">
+                      {selectedProject.status || "STABLE"}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
         </SystemCard>
       </div>
@@ -246,10 +152,10 @@ export default function ArchiveTab() {
         </div>
       </section>
 
-      {/* MINOR MODULES LIST */}
+      {/* MINOR PROJECTS GRID */}
       <section className="space-y-8">
         <h3 className="text-purple-500 font-black tracking-[0.4em] uppercase text-[11px] flex items-center gap-3">
-          <span className="text-purple-400">&lt;/&gt;</span> MINOR_MODULES
+          <span className="text-purple-400">&lt;/&gt;</span> MINOR_PROJECTS
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {MINOR_PROJECTS.map((project) => (
