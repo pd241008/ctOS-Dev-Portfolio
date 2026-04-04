@@ -28,7 +28,7 @@ export default function ToggleDashboard({
   isGlitching,
   triggerGlitch,
 }: DashboardProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true); // Default collapsed for better mobile experience
   const [isTerminalMinimized, setIsTerminalMinimized] = useState(false);
   const isTerminal = viewMode === "terminal";
 
@@ -37,76 +37,65 @@ export default function ToggleDashboard({
   }
 
   return (
-    <div className="h-screen w-full flex text-purple-100 font-mono">
-      {/* SIDEBAR - Still hides when Terminal is open */}
+    <div className="h-screen w-full flex text-purple-100 font-mono relative overflow-hidden bg-black">
+      {/* SIDEBAR - Always visible but Collapsed on Small Screens */}
       <aside
-        className={`${isCollapsed ? "w-16" : "w-64"} ${
-          isTerminal ? "hidden" : "hidden md:flex"
-        } transition-all duration-300 h-full border-r-2 border-purple-500/50 bg-zinc-950/95 backdrop-blur-md flex-col shrink-0 drop-shadow-[5px_0_15px_rgba(168,85,247,0.15)]`}>
+        className={`
+          ${isCollapsed ? "w-16" : "w-16 md:w-64"} 
+          ${isTerminal ? "hidden" : "hidden md:flex"} 
+          transition-all duration-300 h-full border-r-2 border-purple-500/50 bg-zinc-950/95 backdrop-blur-md flex-col shrink-0 z-50 drop-shadow-[5px_0_15px_rgba(168,85,247,0.15)]
+        `}>
         <div
-          className={`h-20 border-b-2 border-purple-500/30 flex items-center ${isCollapsed ? "justify-center" : "justify-between px-6"}`}>
-          {!isCollapsed && (
-            <div className={`overflow-hidden ${isGlitching ? "animate-glitch" : ""}`}>
-              <h1 className={`text-2xl font-bold tracking-widest drop-shadow-[0_0_8px_rgba(168,85,247,0.8)] ${isGlitching ? "text-red-500 animate-pulse" : "text-purple-400"}`}>
-                {isGlitching ? "DEDSEC" : "ctOS"}
-              </h1>
-              <p className={`text-[10px] mt-1 uppercase tracking-widest whitespace-nowrap ${isGlitching ? "text-red-600" : "text-purple-500"}`}>
-                {isGlitching ? "EXPLOIT LOADED" : "v2.0 // Core"}
-              </p>
+          className={`h-20 border-b-2 border-purple-500/30 flex items-center justify-center shrink-0`}>
+          {!isCollapsed ? (
+            <div className={`hidden md:block overflow-hidden px-4 w-full ${isGlitching ? "animate-glitch" : ""}`}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className={`text-xl font-bold tracking-widest drop-shadow-[0_0_8px_rgba(168,85,247,0.8)] ${isGlitching ? "text-red-500 animate-pulse" : "text-purple-400"}`}>
+                    {isGlitching ? "DEDSEC" : "ctOS"}
+                  </h1>
+                  <p className="text-[8px] text-purple-500 font-black tracking-widest uppercase">v2.0 // Core</p>
+                </div>
+                <button
+                  onClick={() => setIsCollapsed(true)}
+                  className="text-purple-400 hover:text-white p-1">
+                  {"<<"}
+                </button>
+              </div>
             </div>
+          ) : (
+            <button
+              onClick={() => setIsCollapsed(false)}
+              className="text-purple-400 hover:text-purple-100 hover:bg-purple-900/40 p-2 rounded-sm transition-colors cursor-pointer font-black text-xs">
+              {">>"}
+            </button>
           )}
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="text-purple-400 hover:text-purple-100 hover:bg-purple-900/40 p-2 rounded-sm transition-colors cursor-pointer shrink-0 font-bold mx-auto">
-            {isCollapsed ? ">>" : "<<"}
-          </button>
         </div>
 
-        <nav className="flex-1 py-4 space-y-2 overflow-hidden">
-          <NavButton
-            label="OVERVIEW"
-            icon="[O]"
-            href="/"
-            isCollapsed={isCollapsed}
-          />
-          <NavButton
-            label="ARCHIVE"
-            icon="[A]"
-            href="/archive"
-            isCollapsed={isCollapsed}
-          />
-          <NavButton
-            label="SANDBOX"
-            icon="[S]"
-            href="/sandbox"
-            isCollapsed={isCollapsed}
-          />
-          <NavButton
-            label="UPLINK"
-            icon="[U]"
-            href="/uplink"
-            isCollapsed={isCollapsed}
-          />
+        <nav className="flex-1 py-4 space-y-2 overflow-y-auto custom-scrollbar overflow-x-hidden">
+          <NavButton label="OVERVIEW" icon="[O]" href="/" isCollapsed={isCollapsed} />
+          <NavButton label="ARCHIVE" icon="[A]" href="/archive" isCollapsed={isCollapsed} />
+          <NavButton label="SANDBOX" icon="[S]" href="/sandbox" isCollapsed={isCollapsed} />
+          <NavButton label="UPLINK" icon="[U]" href="/uplink" isCollapsed={isCollapsed} />
         </nav>
 
-        <div className="h-12 border-t border-purple-500/30 text-xs flex items-center justify-center gap-3 shrink-0">
+        <div className="h-12 border-t border-purple-500/30 flex items-center justify-center shrink-0 bg-black/20">
           <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_5px_#22c55e] shrink-0" />
           {!isCollapsed && (
-            <span className="text-zinc-400 uppercase font-bold tracking-widest whitespace-nowrap">
-              Sys. Integrity: 100%
+            <span className="hidden md:inline ml-3 text-zinc-500 uppercase font-bold tracking-widest text-[9px] whitespace-nowrap">
+              integrity: 100%
             </span>
           )}
         </div>
       </aside>
 
       {/* MAIN CONTENT AREA */}
-      <main className="flex-1 h-full relative overflow-hidden">
-        {/* NEXT.JS PAGE CONTENT (100% Visible, no blur, no opacity drop!) */}
+      <main className="flex-1 h-full relative flex flex-col overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, scale: 0.98, filter: "blur(4px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="h-full overflow-y-auto p-6 md:p-12 transition-all duration-300 pointer-events-auto">
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex-1 overflow-y-auto p-4 md:p-12 transition-all duration-300 pointer-events-auto custom-scrollbar">
           {children}
         </motion.div>
 

@@ -15,7 +15,7 @@ export default function Page() {
       <header className="border-b-2 border-purple-500/40 pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 relative overflow-hidden group">
         <div className="absolute inset-0 bg-linear-to-r from-purple-500/10 to-transparent translate-x--100% group-hover:translate-x-100% transition-transform duration-1000" />
         <div>
-          <h2 className="text-3xl md:text-5xl font-black text-purple-400 tracking-[0.2em] uppercase mb-1 drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]">
+          <h2 className="text-2xl md:text-5xl font-black text-purple-400 tracking-[0.2em] uppercase mb-1 drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]">
             Command_Center
           </h2>
           <div className="flex items-center gap-3">

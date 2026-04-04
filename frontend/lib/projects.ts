@@ -74,7 +74,8 @@ export const MINOR_PROJECTS: Project[] = [
     "desc": "An AI-driven mental wellness dashboard focusing on affective computing. Uses LangChain to orchestrate sentiment analysis over personal journal entries, providing users with mood-trajectory insights. Features a secure, encrypted storage layer and a minimal, distraction-free writing environment.",
     "tags": ["Next.js", "Convex DB", "LangChain", "Sentimental Analysis", "AI/ML", "React", "State Management", "Encryption"],
     "githubUrl": "https://github.com/pd241008/NeuroTrack",
-    "liveUrl": "#"
+    "liveUrl": "https://neuro-track-lime.vercel.app/",
+    "docUrl": "/neurotrack-docs.pdf"
   },
   {
     "id": "intellivod",
@@ -151,10 +152,73 @@ export const MINOR_PROJECTS: Project[] = [
     "tags": ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion", "CLI Engine", "UX Architecture", "System Emulation"],
     "githubUrl": "https://github.com/pd241008/ctOS-Dev-Portfolio",
     "liveUrl": "https://ct-os-dev-porfolio.vercel.app/",
-    "docUrl": "/ctos-docs.md"
+    "docUrl": "/ctos-docs.pdf"
+  },
+  {
+    "id": "expense-manager-e-wallet",
+    "title": "Expense Manager E-Wallet",
+    "desc": "A production-grade expense management platform with real-time transaction tracking and category-based analytics. Built on Next.js 14 with Convex for serverless backend operations and Clerk for secure authentication. Features a responsive dashboard with yearly expense history, dark mode support, and smooth Framer Motion transitions for a premium financial management experience.",
+    "tags": ["Next.js", "Convex", "Clerk Auth", "TypeScript", "Framer Motion", "TailwindCSS", "Serverless", "Financial Tools"],
+    "githubUrl": "#",
+    "liveUrl": "https://expense-tracker-e-wallet.vercel.app/",
+    "docUrl": "/expense-manager-docs.pdf"
+  },
+  {
+    "id": "analysis-agent",
+    "title": "Analysis Agent",
+    "type": "Multi-Agent Intelligence",
+    "desc": "A multi-agent supply chain risk intelligence system designed to monitor global news, social media, and logistics data in real time. Multiple specialized AI agents collaborate to detect supply chain disruptions early, assess impact severity, suggest alternative suppliers, and automate preventive actions — enabling companies to mitigate delays and reduce losses before disruptions cascade.",
+    "tags": ["Python", "FastAPI", "Multi-Agent Systems", "NLP", "Real-time Analytics", "Risk Intelligence", "Next.js", "TypeScript"],
+    "githubUrl": "#",
+    "liveUrl": "#",
+    "docUrl": "/analysis-agent-docs.pdf",
+    "isDraft": true
+  },
+  {
+    "id": "devtrace",
+    "title": "DevTrace",
+    "type": "Developer Observability",
+    "desc": "A high-performance, developer-centric observability platform engineered to capture, analyze, replay, and introspect API traffic in real time. Unlike traditional logging tools, DevTrace operates as an inline programmable proxy layer with a CQRS architecture, separating high-throughput capture from analytical visualization. Features a Rust-based interception engine, a plugin architecture for custom analyzers, and time-travel debugging powered by immutable event sourcing.",
+    "tags": ["Rust", "Tokio", "Hyper", "Next.js", "Express", "TypeScript", "CQRS", "Event Sourcing", "WebSockets"],
+    "githubUrl": "#",
+    "liveUrl": "#",
+    "docUrl": "/devtrace-readme.pdf",
+    "isDraft": true
+  },
+  {
+    "id": "gram-sewek",
+    "title": "Gram Sewek",
+    "type": "Civic Infrastructure",
+    "desc": "A scalable complaint management system designed for rural governance, connecting Villagers (Clients) with Gram Sevaks (Admins). Built on a dual-backend architecture with a TypeScript + Express + MongoDB auth layer and a Python FastAPI microservice for AI-driven complaint categorization. Features a Next.js frontend with Zod-validated request schemas and role-based access control for hierarchical complaint resolution workflows.",
+    "tags": ["TypeScript", "Express", "MongoDB", "FastAPI", "Python", "Next.js", "Zod", "RBAC", "Microservices"],
+    "githubUrl": "#",
+    "liveUrl": "#",
+    "docUrl": "/gram-sewek-docs.pdf",
+    "isDraft": true
+  },
+  {
+    "id": "neoshell",
+    "title": "NeoShell",
+    "type": "Developer Tooling",
+    "desc": "A lightweight, zero-config IDE shell built around Neovim, designed to eliminate terminal friction and configuration overhead. Powered by a Tauri desktop framework with an embedded Neovim instance controlled via RPC, NeoShell provides a GUI project manager, automatic session intelligence for state restoration, and a built-in command engine for project-specific scripts. Leverages the DevTrace engine for deep editor observability and event reconstruction.",
+    "tags": ["Rust", "Tauri", "Neovim", "RPC", "Session Management", "Desktop App", "Developer Tooling"],
+    "githubUrl": "#",
+    "liveUrl": "#",
+    "docUrl": "/neoshell-docs.pdf",
+    "isDraft": true
+  },
+  {
+    "id": "taskiee",
+    "title": "Taskiee",
+    "type": "Team Management SaaS",
+    "desc": "A role-based task management portal designed for engineering teams with a high-contrast Neo-Brutalism design language. Features a Kanban board with drag-and-drop task orchestration, hierarchical role management (President → Admin → Member), deadline tracking, and per-member task views. Built on a Next.js + Express + MongoDB stack with strict TypeScript typing and dnd-kit for fluid board interactions.",
+    "tags": ["Next.js", "Express", "MongoDB", "TypeScript", "dnd-kit", "Kanban", "RBAC", "TailwindCSS"],
+    "githubUrl": "#",
+    "liveUrl": "#",
+    "docUrl": "/taskiee-docs.pdf",
+    "isDraft": true
   }
 ];
-
 export function getProjects(includeDrafts = false) {
   const major = includeDrafts ? MAJOR_PROJECTS : MAJOR_PROJECTS.filter(p => !p.isDraft);
   const minor = includeDrafts ? MINOR_PROJECTS : MINOR_PROJECTS.filter(p => !p.isDraft);
