@@ -102,7 +102,6 @@ export const MAJOR_PROJECTS: Project[] = [
     "id": "devtrace",
     "title": "DevTrace",
     "type": "Developer Observability",
-    "desc": "A high-performance, developer-centric observability platform engineered to capture, analyze, replay, and introspect API traffic in real time. Unlike traditional logging tools, DevTrace operates as an inline programmable proxy layer with a CQRS architecture, separating high-throughput capture from analytical visualization. Features a Rust-based interception engine, a plugin architecture for custom analyzers, and time-travel debugging powered by immutable event sourcing.",
     "tags": [
       "Rust",
       "Tokio",
@@ -116,7 +115,8 @@ export const MAJOR_PROJECTS: Project[] = [
     ],
     "githubUrl": "https://github.com/pd241008/DevTrace",
     "liveUrl": "#",
-    "docUrl": "/devtrace-docs.pdf"
+    "docUrl": "/devtrace-docs.pdf",
+    "description": "A high-performance, developer-centric observability platform engineered to capture, analyze, replay, and introspect API traffic in real time. Unlike traditional logging tools, DevTrace operates as an inline programmable proxy layer with a CQRS architecture, separating high-throughput capture from analytical visualization. Features a Rust-based interception engine, a plugin architecture for custom analyzers, and time-travel debugging powered by immutable event sourcing."
   },
   {
     "id": "aegis",
@@ -178,7 +178,6 @@ export const MAJOR_PROJECTS: Project[] = [
     "id": "neoui",
     "title": "NeoUI",
     "type": "Developer Tooling",
-    "desc": "Neo-brutalist component library — Rust-based CLI, Radix UI primitives, Vitest + Storybook.",
     "tags": [
       "Rust",
       "CLI",
@@ -191,11 +190,103 @@ export const MAJOR_PROJECTS: Project[] = [
     ],
     "githubUrl": "#",
     "liveUrl": "https://www.npmjs.com/package/@pd241008/neoui",
-    "docUrl": "/neoui-docs.pdf"
+    "docUrl": "/neoui-docs.pdf",
+    "description": "A comprehensive neo-brutalist component library and design system. NeoUI features a high-performance Rust-based CLI for scaffolding components, built on top of Radix UI primitives for full accessibility. It includes a robust testing suite using Vitest and comprehensive documentation via Storybook, enabling rapid and consistent UI development."
+  },
+  {
+    "id": "neuro-compiler",
+    "title": "NEURO",
+    "type": "Compiler Infrastructure",
+    "tags": [
+      "C#",
+      "Rust",
+      "C++",
+      "LLVM",
+      "Compiler Design",
+      "Security",
+      "Infrastructure"
+    ],
+    "githubUrl": "https://github.com/pd241008/Neuro",
+    "liveUrl": "#",
+    "docUrl": "/neuro-compiler-docs.pdf",
+    "description": "Zero-trust polyglot compiler pipeline — C# hand-written recursive descent parser → Rust security auditor → C++ LLVM IR translator. Mathematically guarantees memory safety before codegen."
+  },
+  {
+    "id": "neoshell",
+    "title": "NeoShell",
+    "type": "Developer Tooling",
+    "tags": [
+      "Rust",
+      "Tauri",
+      "Neovim",
+      "RPC",
+      "Session Management",
+      "Desktop App",
+      "Developer Tooling"
+    ],
+    "githubUrl": "#",
+    "liveUrl": "#",
+    "docUrl": "/neoshell-docs.pdf",
+    "isDraft": true,
+    "description": "A lightweight, zero-config IDE shell built around Neovim, designed to eliminate terminal friction and configuration overhead. Powered by a Tauri desktop framework with an embedded Neovim instance controlled via RPC, NeoShell provides a GUI project manager, automatic session intelligence for state restoration, and a built-in command engine for project-specific scripts. Leverages the DevTrace engine for deep editor observability and event reconstruction."
+  },
+  {
+    "id": "gamify",
+    "title": "Gamify",
+    "type": "Backend Infrastructure",
+    "tags": [
+      "Go",
+      "GitHub Actions",
+      "Cassandra",
+      "Upstash",
+      "Serverless",
+      "Time-Series"
+    ],
+    "githubUrl": "#",
+    "liveUrl": "#",
+    "isDraft": true,
+    "docUrl": "/gamify-docs.pdf",
+    "description": "Serverless esports tracking pipeline — Go + GitHub Actions cron ingestion, Cassandra (DataStax Astra) for time-series match data, Upstash QStash for zero-worker delayed notifications."
+  },
+  {
+    "id": "syntaxflow",
+    "title": "SyntaxFlow",
+    "type": "Developer Tooling",
+    "tags": [
+      "Go",
+      "WASM",
+      "Web Workers",
+      "Algorithms",
+      "Graph Theory",
+      "Tooling"
+    ],
+    "githubUrl": "#",
+    "liveUrl": "#",
+    "isDraft": true,
+    "docUrl": "/syntaxflow-docs.pdf",
+    "description": "Text-to-diagram engine — Go/TinyGo WASM parser, DFS cycle breaking, A* orthogonal routing, ELK layout in Web Workers."
   }
 ];
 
 export const MINOR_PROJECTS: Project[] = [
+  {
+    "id": "neuro",
+    "title": "NeuroTrack",
+    "tags": [
+      "Next.js",
+      "Convex DB",
+      "LangChain",
+      "Sentimental Analysis",
+      "AI/ML",
+      "React",
+      "State Management",
+      "Encryption"
+    ],
+    "githubUrl": "https://github.com/pd241008/NeuroTrack",
+    "liveUrl": "https://neuro-track-lime.vercel.app/",
+    "docUrl": "/neurotrack-docs.pdf",
+    "desc": "An AI-driven mental wellness dashboard focusing on affective computing. Uses LangChain to orchestrate sentiment analysis over personal journal entries, providing users with mood-trajectory insights. Features a secure, encrypted storage layer and a minimal, distraction-free writing environment."
+  },
   {
     "id": "aqi",
     "title": "AI-Powered AQI Prediction",
@@ -213,24 +304,6 @@ export const MINOR_PROJECTS: Project[] = [
     "githubUrl": "https://github.com/pd241008/AQI-Preditcion-Model",
     "liveUrl": "https://aqi-preditcion-model.vercel.app/",
     "docUrl": "/aqi-docs.pdf"
-  },
-  {
-    "id": "neuro",
-    "title": "NeuroTrack",
-    "desc": "An AI-driven mental wellness dashboard focusing on affective computing. Uses LangChain to orchestrate sentiment analysis over personal journal entries, providing users with mood-trajectory insights. Features a secure, encrypted storage layer and a minimal, distraction-free writing environment.",
-    "tags": [
-      "Next.js",
-      "Convex DB",
-      "LangChain",
-      "Sentimental Analysis",
-      "AI/ML",
-      "React",
-      "State Management",
-      "Encryption"
-    ],
-    "githubUrl": "https://github.com/pd241008/NeuroTrack",
-    "liveUrl": "https://neuro-track-lime.vercel.app/",
-    "docUrl": "/neurotrack-docs.pdf"
   },
   {
     "id": "intellivod",
@@ -442,25 +515,6 @@ export const MINOR_PROJECTS: Project[] = [
     "docUrl": "/gram-sewek-docs.pdf"
   },
   {
-    "id": "neoshell",
-    "title": "NeoShell",
-    "type": "Developer Tooling",
-    "desc": "A lightweight, zero-config IDE shell built around Neovim, designed to eliminate terminal friction and configuration overhead. Powered by a Tauri desktop framework with an embedded Neovim instance controlled via RPC, NeoShell provides a GUI project manager, automatic session intelligence for state restoration, and a built-in command engine for project-specific scripts. Leverages the DevTrace engine for deep editor observability and event reconstruction.",
-    "tags": [
-      "Rust",
-      "Tauri",
-      "Neovim",
-      "RPC",
-      "Session Management",
-      "Desktop App",
-      "Developer Tooling"
-    ],
-    "githubUrl": "#",
-    "liveUrl": "#",
-    "docUrl": "/neoshell-docs.pdf",
-    "isDraft": true
-  },
-  {
     "id": "taskiee",
     "title": "Taskiee",
     "type": "Team Management SaaS",
@@ -478,60 +532,6 @@ export const MINOR_PROJECTS: Project[] = [
     "githubUrl": "https://github.com/pd241008/Taskiee",
     "liveUrl": "#",
     "docUrl": "/taskiee-docs.pdf"
-  },
-  {
-    "id": "neuro-compiler",
-    "title": "NEURO",
-    "type": "Compiler Infrastructure",
-    "desc": "Zero-trust polyglot compiler pipeline — C# hand-written recursive descent parser → Rust security auditor → C++ LLVM IR translator. Mathematically guarantees memory safety before codegen.",
-    "tags": [
-      "C#",
-      "Rust",
-      "C++",
-      "LLVM",
-      "Compiler Design",
-      "Security",
-      "Infrastructure"
-    ],
-    "githubUrl": "https://github.com/pd241008/Neuro",
-    "liveUrl": "#",
-    "docUrl": "/neuro-compiler-docs.pdf"
-  },
-  {
-    "id": "gamify",
-    "title": "Gamify",
-    "type": "Backend Infrastructure",
-    "desc": "Serverless esports tracking pipeline — Go + GitHub Actions cron ingestion, Cassandra (DataStax Astra) for time-series match data, Upstash QStash for zero-worker delayed notifications.",
-    "tags": [
-      "Go",
-      "GitHub Actions",
-      "Cassandra",
-      "Upstash",
-      "Serverless",
-      "Time-Series"
-    ],
-    "githubUrl": "#",
-    "liveUrl": "#",
-    "isDraft": true,
-    "docUrl": "/gamify-docs.pdf"
-  },
-  {
-    "id": "syntaxflow",
-    "title": "SyntaxFlow",
-    "type": "Developer Tooling",
-    "desc": "Text-to-diagram engine — Go/TinyGo WASM parser, DFS cycle breaking, A* orthogonal routing, ELK layout in Web Workers.",
-    "tags": [
-      "Go",
-      "WASM",
-      "Web Workers",
-      "Algorithms",
-      "Graph Theory",
-      "Tooling"
-    ],
-    "githubUrl": "#",
-    "liveUrl": "#",
-    "isDraft": true,
-    "docUrl": "/syntaxflow-docs.pdf"
   },
   {
     "id": "taskiee-ai-ops",
