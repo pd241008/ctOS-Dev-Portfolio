@@ -197,3 +197,10 @@ npm run build
 **OPERATOR: prathmesh_desai**
 **LAST_SYNC: 2026.03.16.2250**
 **STATUS: SYSTEM_READY**
+
+
+## 🎯 Project Roadmap
+- [x] **Phase 1**: Concept & UX Design.
+- [x] **Phase 2**: Frontend Interface (Terminal Portfolio UI).
+- [ ] **Phase 3**: Backend Infrastructure Setup.
+- [ ] **Phase 4**: Full-Stack Integration.

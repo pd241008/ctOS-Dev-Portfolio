@@ -19,8 +19,9 @@ import ProjectLinkController from "@/components/ui/ProjectLinkController";
 
 // ─── Drafts Data ────────────────────────────────────────────────
 // Drafts are now fetched from the central projects library
-const { minor: ALL_MINOR } = getProjects(true);
-const DRAFTS = ALL_MINOR.filter(p => p.isDraft);
+const { major: ALL_MAJOR, minor: ALL_MINOR } = getProjects(true);
+const MAJOR_DRAFTS = ALL_MAJOR.filter(p => p.isDraft);
+const MINOR_DRAFTS = ALL_MINOR.filter(p => p.isDraft);
 
 export default function SandboxPage() {
   const [viewMode, setViewMode] = useState<"overview" | "ide">("overview");
@@ -289,11 +290,11 @@ export default function SandboxPage() {
           <div className="lg:col-span-2 space-y-8">
             <h4 className="text-[10px] text-zinc-600 font-black uppercase tracking-[0.4em] flex items-center gap-4">
               <span className="w-12 h-[1px] bg-zinc-800" />{" "}
-              INNOVATION_DRAFTS_REPOSITORY{" "}
+              INNOVATION_DRAFTS_REPOSITORY // MAJOR_PROJECTS{" "}
               <span className="flex-1 h-[1px] bg-zinc-800" />
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {DRAFTS.map((draft) => (
+              {MAJOR_DRAFTS.map((draft) => (
                 <div
                   key={draft.id}
                   onClick={() => setSelectedProject(draft)}
@@ -310,7 +311,45 @@ export default function SandboxPage() {
                     {draft.title}
                   </h4>
                   <p className="text-[11px] text-zinc-500 line-clamp-3 mb-6 flex-1 font-medium leading-relaxed">
-                    {draft.desc}
+                    {draft.desc || draft.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {draft.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[9px] text-purple-400 bg-purple-900/30 px-2 py-0.5 rounded-sm uppercase font-black tracking-tighter">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <h4 className="text-[10px] text-zinc-600 font-black uppercase tracking-[0.4em] flex items-center gap-4 mt-12">
+              <span className="w-12 h-[1px] bg-zinc-800" />{" "}
+              INNOVATION_DRAFTS_REPOSITORY // MINOR_PROJECTS{" "}
+              <span className="flex-1 h-[1px] bg-zinc-800" />
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {MINOR_DRAFTS.map((draft) => (
+                <div
+                  key={draft.id}
+                  onClick={() => setSelectedProject(draft)}
+                  className="p-6 bg-zinc-950/80 border border-zinc-800 hover:border-purple-500 hover:bg-purple-900/20 transition-all cursor-pointer rounded-sm flex flex-col min-h-60 group">
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="text-amber-500 text-2xl group-hover:scale-110 transition-transform">
+                      📁
+                    </span>
+                    <span className="text-purple-500 text-[10px] font-black tracking-[0.2em]">
+                      [ DEEP_SCAN ]
+                    </span>
+                  </div>
+                  <h4 className="text-white font-black uppercase tracking-widest text-sm mb-3 group-hover:text-purple-300 transition-colors">
+                    {draft.title}
+                  </h4>
+                  <p className="text-[11px] text-zinc-500 line-clamp-3 mb-6 flex-1 font-medium leading-relaxed">
+                    {draft.desc || draft.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {draft.tags.map((tag) => (
